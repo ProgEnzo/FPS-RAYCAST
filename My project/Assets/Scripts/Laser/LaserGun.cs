@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Serialization;
 using RaycastHit = UnityEngine.RaycastHit;
@@ -12,7 +13,11 @@ public class LaserGun : MonoBehaviour
    [SerializeField] float lenght;
    [SerializeField] int maxBounce = 3;
    [SerializeField] float maxDistance = 100;
+   [SerializeField] int currentBounceNumber = 0;
+   [SerializeField] Color currentColor = Color.blue;
 
+   public GameObject sphere;
+   
    public LineRenderer lr;
 
    public rotationController rc;
@@ -23,12 +28,20 @@ public class LaserGun : MonoBehaviour
    {
       points.Clear();
       points.Add(rc.head.transform.position);
-      
+
       DoRay(rc.head.transform.position, transform.forward, maxBounce, maxDistance);
       
       lr.positionCount = points.Count;
       lr.SetPositions(points.ToArray());
    }
+
+   /*private void OnTriggerEnter(Collider other)
+   {
+      if (other.CompareTag("MovingSphere"))
+      {
+         sphere
+      }
+   }*/
 
    private void DoRay(Vector3 origin, Vector3 direction, int bounceLeft, float distance)
    {
@@ -45,6 +58,8 @@ public class LaserGun : MonoBehaviour
             //lr.positionCount += 2;
                                            
             Debug.DrawRay(hit.point, newDirection * 2, Color.green, 0f);
+            
+            //hit.transform.GameObject().GetComponent<Rigidbody>().AddForce(15, );
          
             bounceLeft--;
             distance -= hit.distance;

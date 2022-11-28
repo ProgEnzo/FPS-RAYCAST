@@ -13,6 +13,6 @@ public class MoveController : MonoBehaviour
     public float verticalInput;
     private void Update()
     {
-        rb.AddForce((transform.forward * verticalInput + transform.right * horizontalInput) * speed, ForceMode.Acceleration);
+        rb.AddForce((transform.forward * verticalInput + transform.right * horizontalInput) * speed, ForceMode.Force);
     }
 }
